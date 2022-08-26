@@ -1,9 +1,12 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from "typeorm";
+import { Transform } from "class-transformer";
+import { ObjectId } from "mongodb";
+import { Entity, ObjectIdColumn, Column, ObjectID } from "typeorm";
 
-@Entity()
+@Entity({ name: "users" })
 export class Users {
-  @ObjectIdColumn()
-  id: ObjectID;
+  @ObjectIdColumn({ name: "_id", type: "varchar" })
+  @Transform((id: any) => id.value.toHexString(), { toPlainOnly: true })
+  id: ObjectId;
 
   @Column()
   name: string;
@@ -12,7 +15,7 @@ export class Users {
   password: string;
 
   @Column()
-  nickname: string;
+  nickName: string;
 
   @Column()
   team: "blue" | "red" | "yellow";

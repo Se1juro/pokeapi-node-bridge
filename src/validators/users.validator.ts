@@ -1,6 +1,6 @@
-import { IsString} from "class-validator";
+import { IsEnum, IsString } from "class-validator";
+export const teams: string[] = ["red", "blue", "yellow"];
 export class CreateUserValidator {
-
   @IsString()
   name: string;
 
@@ -8,8 +8,10 @@ export class CreateUserValidator {
   password: string;
 
   @IsString()
-  nickname: string;
+  nickName: string;
 
-  @IsString()
+  @IsEnum(teams, {
+    message: "El equipo es invalido",
+  })
   team: "blue" | "red" | "yellow";
 }
