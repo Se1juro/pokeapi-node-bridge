@@ -1,24 +1,11 @@
-import {
-  JsonController,
-  Param,
-  Body,
-  Get,
-  Post,
-  Put,
-  Delete,
-} from "routing-controllers";
-import { ObjectID } from "typeorm";
+import { JsonController, Param, Get, UseBefore } from "routing-controllers";
+import { AuthJwtMiddleare } from "../middlewares/auth.middleware";
 import { UserService } from "../services/users.service";
-import { CreateUserValidator } from "../validators/users.validator";
 
 @JsonController("/api/users")
+@UseBefore(AuthJwtMiddleare)
 export class UserController {
   constructor(protected readonly userService: UserService) {}
-
-  @Post("/")
-  createUser(@Body() user: CreateUserValidator) {
-    return this.userService.createUser(user);
-  }
 
   @Get("/")
   getAllUsers() {

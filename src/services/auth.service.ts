@@ -7,6 +7,8 @@ import { sign } from "jsonwebtoken";
 import { comparePassword } from "../utils/auth/comparePassword.util";
 import { PRIVATE_KEY } from "../constants/auth.constant";
 import { UserService } from "./users.service";
+import { genSalt, hashSync } from "bcrypt";
+import { ISignUpResponse } from "../interfaces/signUpResponse.interface";
 
 @Service()
 export class AuthService {
@@ -28,6 +30,23 @@ export class AuthService {
     });
     await this.userService.updateLastLoggin(userLogin);
     return { token };
+  }
+
+  async signUp(payload: DeepPartial<Users>): Promise<ISignUpResponse> {
+    const { nickName } = payload;
+    let userExists = await UsersRepository.findByNickName(String(nickName));
+
+    if (userExists) throw new BadRequestError("El usuario ya existe");
+
+    const hashPassword = hashSync(String(payload.password), await genSalt(10));
+
+    const newUser = UsersRepository.create({
+      ...payload,
+      lastConnection: new Date(),
+      password: hashPassword,
+    });
+    const userSaved = await UsersRepository.save(newUser);
+    return { user: userSaved, token: await this.generateToken(userSaved) };
   }
 
   async generateToken(user: DeepPartial<Users>): Promise<string> {

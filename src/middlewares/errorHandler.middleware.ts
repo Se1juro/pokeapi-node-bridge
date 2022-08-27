@@ -16,10 +16,10 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
   ) {
     if (error instanceof axios.Cancel) return;
     const { message, name, errors = [], httpCode = 500 } = error;
-
     response.status(httpCode).json({
       httpCode,
-      message: { value: name },
+      message: message,
+      type: name,
       errors,
     });
     next();
