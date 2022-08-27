@@ -34,4 +34,8 @@ export class UserService {
     if (!user) throw new NotFoundError("");
     return user;
   }
+
+  async updateLastLoggin(user: Users): Promise<Users> {
+    return await UsersRepository.save({ ...user, lastConnection: new Date() });
+  }
 }

@@ -1,4 +1,3 @@
-import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../configDb";
 import { Users } from "../models/users.model";
 

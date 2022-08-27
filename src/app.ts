@@ -9,9 +9,9 @@ const app = createExpressServer({
   middlewares: [path.join(__dirname + "/middlewares/*.ts")],
   cors: true,
   classTransformer: true,
-  currentUserChecker: async(action:Action)=>{
-    return action.request.user
-  }
+  currentUserChecker: async (action: Action) => {
+    return action.request.user;
+  },
 });
 
 app.use(morgan("dev"));

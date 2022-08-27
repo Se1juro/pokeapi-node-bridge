@@ -1,7 +1,16 @@
-import { JsonController, Param, Get, QueryParam } from "routing-controllers";
+import passport from "passport";
+import {
+  JsonController,
+  Param,
+  Get,
+  QueryParam,
+  UseBefore,
+} from "routing-controllers";
+import { AuthJwtMiddleare } from "../middlewares/auth.middleware";
 import { PokemonService } from "../services/pokemon.service";
 
 @JsonController("/api/pokemon")
+@UseBefore(AuthJwtMiddleare)
 export class PokemonController {
   constructor(protected readonly pokemonService: PokemonService) {}
 
