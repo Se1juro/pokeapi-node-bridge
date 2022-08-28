@@ -1,4 +1,3 @@
-import passport from "passport";
 import {
   JsonController,
   Param,
@@ -10,20 +9,23 @@ import { AuthJwtMiddleare } from "../middlewares/auth.middleware";
 import { PokemonService } from "../services/pokemon.service";
 
 @JsonController("/api/pokemon")
-@UseBefore(AuthJwtMiddleare)
+// @UseBefore(AuthJwtMiddleare)
 export class PokemonController {
   constructor(protected readonly pokemonService: PokemonService) {}
 
-  @Get("/")
-  getAllPokemon(
+  @Get("/list")
+  async getAllPokemon(
     @QueryParam("limit") limit: number,
     @QueryParam("page") page: number
   ) {
-    return this.pokemonService.getAllPokemon(limit, page);
+    return await this.pokemonService.getAllPokemon(limit, page);
   }
 
-  @Get("/:name")
-  getPokemonByName(@Param("name") name: string) {
-    return this.pokemonService.getPokemonByName(name);
+  @Get("/")
+  getPokemonByName(
+    @QueryParam("name") name: string,
+    @QueryParam("page") page: number
+  ) {
+    return this.pokemonService.getPokemonByName(name, page);
   }
 }
