@@ -40,7 +40,7 @@ jobs:
     - name: Run script file
       run: |
          chmod +x ./secrets.sh
-         ./test.sh
+         ./secrets.sh
       shell: bash
   build:
     needs: [createSecrets]
