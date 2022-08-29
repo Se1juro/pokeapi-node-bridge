@@ -10,7 +10,7 @@ switch (process.env.NODE_ENV) {
 }
 
 export const UsersRepository = dataSource.getRepository(Users).extend({
-  async findUsers(page?: number, limit?: number): Promise<Users[]> {
+  async findUsers(): Promise<Users[]> {
     return await this.find();
   },
 

@@ -6,13 +6,11 @@ import { AppDataSource as dbDevelopment } from "./configDb.dev";
 import { AppDataSource as dbProduction } from "./configDb.prod";
 import os from "os";
 import cluster from "cluster";
-import { resolve } from "path";
 
 const numCpu = os.cpus().length;
 
 const main = async () => {
   try {
-    console.log(__dirname + "/models/*.model.js");
     routeContainer(Container);
     switch (process.env.NODE_ENV) {
       case "development":

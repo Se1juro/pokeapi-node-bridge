@@ -1,5 +1,4 @@
 import { DataSource } from "typeorm";
-import { Users } from "./models/users.model";
 export const AppDataSource = new DataSource({
   name: "default",
   type: "mongodb",
