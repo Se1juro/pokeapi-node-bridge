@@ -1,6 +1,6 @@
 {
   "name": "pokeapi-node",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .ts",
     "prepare": "husky install"
   },
-  "author": "",
+  "author": "Daniel Morales",
   "license": "ISC",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
