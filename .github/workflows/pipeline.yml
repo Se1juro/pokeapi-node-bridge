@@ -33,7 +33,17 @@ jobs:
         run: npm ci --legacy-peer-deps
       - name: Lint
         run: npm run lint
+  run_tests:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run script file
+      run: |
+         chmod +x ./secrets.sh
+         ./test.sh
+      shell: bash
   build:
+    needs: [createSecrets]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +63,7 @@ jobs:
           path: dist
   deploy:
     needs: [build]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:

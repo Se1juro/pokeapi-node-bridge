@@ -16,10 +16,6 @@ export class JwtStrategy extends Strategy {
   }
 
   static verify(payload: ISession, done: VerifiedCallback): void {
-    console.log(
-      "🚀 ~ file: jwt.strategy.ts ~ line 18 ~ JwtStrategy ~ verify ~ payload",
-      payload
-    );
     return done(null, payload);
   }
 }
