@@ -1,7 +1,5 @@
 import { BadRequestError, NotFoundError } from "routing-controllers";
 import { Service } from "typedi";
-import { DeepPartial } from "typeorm";
-import { Users } from "../models/users.model";
 import { UsersRepository } from "../repositories/users.repository";
 import { sign, verify } from "jsonwebtoken";
 import { comparePassword } from "../utils/auth/comparePassword.util";
@@ -9,21 +7,30 @@ import { PRIVATE_KEY } from "../constants/auth.constant";
 import { UserService } from "./users.service";
 import { genSaltSync, hashSync } from "bcryptjs";
 import { IUserLogged } from "../interfaces/userLogged.interface";
+import { IUser } from "../interfaces/user.interface";
 
 @Service()
 export class AuthService {
-  constructor(protected readonly userService: UserService) {}
-  async sigIn(user: DeepPartial<Users>) {
+  constructor(
+    protected readonly userService: UserService,
+    private usersRepository: UsersRepository
+  ) {}
+  async sigIn(user: IUser) {
     const { nickName, password } = user;
-    const userLogin = await UsersRepository.findByNickName(String(nickName));
+    const userLogin = await this.usersRepository.findByNickName(
+      String(nickName)
+    );
 
     if (!userLogin) throw new NotFoundError("Usuario no encontrado");
-    const comparePass = comparePassword(String(password), userLogin.password);
+    const comparePass = comparePassword(
+      String(password),
+      String(userLogin.password)
+    );
 
     if (!comparePass) throw new BadRequestError("Credenciales incorrectas");
 
     const token = await this.generateToken({
-      id: userLogin.id,
+      id: String(userLogin._id),
       nickName,
       lastConnection: userLogin.lastConnection,
       team: userLogin.team,
@@ -34,25 +41,27 @@ export class AuthService {
     return { token };
   }
 
-  async signUp(payload: DeepPartial<Users>) {
+  async signUp(payload: IUser): Promise<{ user: IUser; token: string }> {
     const { nickName } = payload;
-    const userExists = await UsersRepository.findByNickName(String(nickName));
-
+    const userExists = await this.usersRepository.findByNickName(
+      String(nickName)
+    );
     if (userExists) throw new BadRequestError("El usuario ya existe");
     const salt = genSaltSync(5);
 
     const hashPassword = hashSync(String(payload.password), salt);
 
-    const newUser = UsersRepository.create({
+    const newUser = await this.usersRepository.createUser({
       ...payload,
       lastConnection: new Date(),
       password: hashPassword,
     });
 
-    const userSaved = await UsersRepository.save(newUser);
-    const token = await this.generateToken(userSaved);
+    const { password, ...userLogged } = newUser;
 
-    return { user: userSaved, token };
+    const token = await this.generateToken(userLogged);
+
+    return { user: userLogged, token };
   }
 
   async checkAuth(userLogged: IUserLogged) {
@@ -71,7 +80,7 @@ export class AuthService {
     }
   }
 
-  async generateToken(user: DeepPartial<Users>): Promise<string> {
+  async generateToken(user: IUser): Promise<string> {
     const token = sign({ ...user }, PRIVATE_KEY, {
       expiresIn: 86400,
       algorithm: "RS256",

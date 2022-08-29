@@ -6,21 +6,25 @@ import { AppDataSource as dbDevelopment } from "./configDb.dev";
 import { AppDataSource as dbProduction } from "./configDb.prod";
 import os from "os";
 import cluster from "cluster";
+import { connect } from "mongoose";
 
 const numCpu = os.cpus().length;
 
 const main = async () => {
   try {
     routeContainer(Container);
-    switch (process.env.NODE_ENV) {
+    /* switch (process.env.NODE_ENV) {
       case "development":
         await dbDevelopment.initialize();
         break;
       case "production":
         await dbProduction.initialize();
         break;
-    }
-    console.log("Database connected");
+    } */
+    await connect(String(process.env.DATABASE_URL), {
+      authSource: "admin",
+      dbName: process.env.DATABASE_NAME,
+    });
 
     if (process.env.NODE_ENV === "production" && cluster.isPrimary) {
       for (let i = 0; i <= numCpu; i++) {

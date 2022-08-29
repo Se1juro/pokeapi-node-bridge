@@ -1,7 +1,7 @@
 import { JsonController, Body, Post } from "routing-controllers";
+import { IUser } from "../interfaces/user.interface";
 import { IUserLogged } from "../interfaces/userLogged.interface";
 import { AuthService } from "../services/auth.service";
-import { SigInValidator } from "../validators/sigIn.validator";
 import { CreateUserValidator } from "../validators/users.validator";
 
 @JsonController("/api/auth")
@@ -9,7 +9,7 @@ export class AuthController {
   constructor(protected readonly authService: AuthService) {}
 
   @Post("/sigin")
-  login(@Body() user: SigInValidator) {
+  login(@Body() user: IUser) {
     return this.authService.sigIn(user);
   }
 

@@ -1,25 +1,17 @@
-import { Transform } from "class-transformer";
-import { ObjectId } from "mongodb";
-import { Entity, ObjectIdColumn, Column } from "typeorm";
+import { Schema, model } from "mongoose";
+import { IUser } from "../interfaces/user.interface";
 
-@Entity({ name: "users" })
-export class Users {
-  @ObjectIdColumn({ name: "_id", type: "varchar" })
-  @Transform((id: any) => id.value.toHexString(), { toPlainOnly: true })
-  id: ObjectId;
+// 1. Create an interface representing a document in MongoDB.
 
-  @Column()
-  name: string;
+// 2. Create a Schema corresponding to the document interface.
+const usersSchema = new Schema<IUser>({
+  name: { type: String, required: true },
+  password: { type: String, required: true },
+  nickName: { type: String, required: true },
+  team: { type: String, required: true },
+  lastConnection: { type: Date, required: true },
+});
 
-  @Column()
-  password: string;
+const Users = model<IUser>("users", usersSchema);
 
-  @Column()
-  nickName: string;
-
-  @Column()
-  team: "blue" | "red" | "yellow";
-
-  @Column()
-  lastConnection: Date;
-}
+export default Users;

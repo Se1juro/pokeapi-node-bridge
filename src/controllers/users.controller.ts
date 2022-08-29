@@ -7,7 +7,7 @@ import { UserService } from "../services/users.service";
 export class UserController {
   constructor(protected readonly userService: UserService) {}
 
-  @Get("/")
+  /*   @Get("/")
   getAllUsers() {
     return this.userService.getUsers();
   }
@@ -15,5 +15,5 @@ export class UserController {
   @Get("/:id")
   getUserById(@Param("id") id: string) {
     return this.userService.getUserById(id);
-  }
+  } */
 }
