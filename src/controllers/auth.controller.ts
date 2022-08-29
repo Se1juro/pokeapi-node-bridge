@@ -1,4 +1,4 @@
-import { JsonController, Param, Body, Get, Post } from "routing-controllers";
+import { JsonController, Body, Post } from "routing-controllers";
 import { IUserLogged } from "../interfaces/userLogged.interface";
 import { AuthService } from "../services/auth.service";
 import { SigInValidator } from "../validators/sigIn.validator";

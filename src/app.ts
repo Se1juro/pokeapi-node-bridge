@@ -2,7 +2,6 @@ import "dotenv/config";
 import morgan from "morgan";
 import { Action, createExpressServer } from "routing-controllers";
 import path from "path";
-import cors from "cors";
 
 const app = createExpressServer({
   routePrefix: "/pokeapi",

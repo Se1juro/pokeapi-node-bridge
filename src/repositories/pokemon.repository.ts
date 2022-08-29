@@ -29,8 +29,8 @@ export class PokemonRepository {
   }
   async getPokemonByName(
     name: string,
-    page: number = 1,
-    limit: number = 12
+    page = 1,
+    limit = 12
   ): Promise<IPokemon> {
     const response: IPokemon = await (
       await axiosCore.get(`/pokemon/${name}?page=${page}?limit=${limit}`)

@@ -36,7 +36,7 @@ export class AuthService {
 
   async signUp(payload: DeepPartial<Users>) {
     const { nickName } = payload;
-    let userExists = await UsersRepository.findByNickName(String(nickName));
+    const userExists = await UsersRepository.findByNickName(String(nickName));
 
     if (userExists) throw new BadRequestError("El usuario ya existe");
     const salt = genSaltSync(5);
@@ -50,7 +50,7 @@ export class AuthService {
     });
 
     const userSaved = await UsersRepository.save(newUser);
-    let token = await this.generateToken(userSaved);
+    const token = await this.generateToken(userSaved);
 
     return { user: userSaved, token };
   }
@@ -59,7 +59,7 @@ export class AuthService {
     const { token } = userLogged;
     if (!token) return { logged: false, user: undefined };
     try {
-      let authVerify = verify(token, PRIVATE_KEY, {
+      const authVerify = verify(token, PRIVATE_KEY, {
         algorithms: ["RS256"],
       });
       return { user: authVerify, logged: true };
@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   async generateToken(user: DeepPartial<Users>): Promise<string> {
-    let token = sign({ ...user }, PRIVATE_KEY, {
+    const token = sign({ ...user }, PRIVATE_KEY, {
       expiresIn: 86400,
       algorithm: "RS256",
     });

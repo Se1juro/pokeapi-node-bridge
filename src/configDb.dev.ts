@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import { DataSource } from "typeorm";
 export const AppDataSource = new DataSource({
   name: "default",
@@ -10,6 +9,6 @@ export const AppDataSource = new DataSource({
   authSource: "admin",
   synchronize: false,
   logging: true,
-  entities: [resolve("./src/models/**/*.ts")],
-  migrations: [resolve("./src/migrations/*.ts")],
+  entities: ["./src/models/*{.ts,.js}"],
+  migrations: ["./src/migrations/*{.ts,.js}"],
 });

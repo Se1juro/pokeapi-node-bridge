@@ -1,6 +1,5 @@
 import {
   JsonController,
-  Param,
   Get,
   QueryParam,
   UseBefore,

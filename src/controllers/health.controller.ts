@@ -1,9 +1,9 @@
-import { JsonController, Param, Body, Get, Post, Put, Delete } from 'routing-controllers';
+import { JsonController, Get } from "routing-controllers";
 
 @JsonController()
 export class UserController {
-  @Get('/health')
+  @Get("/health")
   getAll() {
-    return "Server ON"
+    return "Server ON";
   }
 }

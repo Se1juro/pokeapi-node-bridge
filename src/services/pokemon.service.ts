@@ -6,10 +6,10 @@ import { PokemonRepository } from "../repositories/pokemon.repository";
 @Service()
 export class PokemonService {
   constructor(protected readonly pokemonRepository: PokemonRepository) {}
-  async getAllPokemon(limit: number = 12, page: number = 1) {
+  async getAllPokemon(limit = 12, page = 1) {
     return await this.pokemonRepository.getAllPokemon(limit, page);
   }
-  async getPokemonByName(name: string, page: number = 1) {
+  async getPokemonByName(name: string, page = 1) {
     return await this.pokemonRepository.getPokemonByName(name, page);
   }
 }
