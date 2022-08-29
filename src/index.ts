@@ -12,7 +12,7 @@ const numCpu = os.cpus().length;
 
 const main = async () => {
   try {
-    console.log(resolve(__dirname, "./models/*.js"));
+    console.log(__dirname + "/models/*.model.js");
     routeContainer(Container);
     switch (process.env.NODE_ENV) {
       case "development":

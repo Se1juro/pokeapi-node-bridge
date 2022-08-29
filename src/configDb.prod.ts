@@ -1,5 +1,4 @@
 import { DataSource } from "typeorm";
-import { resolve } from "path";
 import { Users } from "./models/users.model";
 export const AppDataSource = new DataSource({
   name: "default",
@@ -9,5 +8,5 @@ export const AppDataSource = new DataSource({
   authSource: "admin",
   synchronize: false,
   logging: true,
-  entities: [Users],
+  entities: [__dirname + "/models/*.model.js"],
 });
