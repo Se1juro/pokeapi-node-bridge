@@ -20,11 +20,10 @@ const configDb_dev_1 = require("./configDb.dev");
 const configDb_prod_1 = require("./configDb.prod");
 const os_1 = __importDefault(require("os"));
 const cluster_1 = __importDefault(require("cluster"));
-const path_1 = require("path");
 const numCpu = os_1.default.cpus().length;
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log((0, path_1.resolve)(__dirname, "./models/*.js"));
+        console.log(__dirname + "/models/*.model.js");
         (0, routing_controllers_1.useContainer)(typeorm_typedi_extensions_1.Container);
         switch (process.env.NODE_ENV) {
             case "development":
