@@ -1,7 +1,5 @@
-import passport from "passport";
 import {
   JsonController,
-  Param,
   Get,
   QueryParam,
   UseBefore,
@@ -14,16 +12,19 @@ import { PokemonService } from "../services/pokemon.service";
 export class PokemonController {
   constructor(protected readonly pokemonService: PokemonService) {}
 
-  @Get("/")
-  getAllPokemon(
+  @Get("/list")
+  async getAllPokemon(
     @QueryParam("limit") limit: number,
     @QueryParam("page") page: number
   ) {
-    return this.pokemonService.getAllPokemon(limit, page);
+    return await this.pokemonService.getAllPokemon(limit, page);
   }
 
-  @Get("/:name")
-  getPokemonByName(@Param("name") name: string) {
-    return this.pokemonService.getPokemonByName(name);
+  @Get("/")
+  getPokemonByName(
+    @QueryParam("name") name: string,
+    @QueryParam("page") page: number
+  ) {
+    return this.pokemonService.getPokemonByName(name, page);
   }
 }

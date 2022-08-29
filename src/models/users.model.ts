@@ -1,6 +1,6 @@
 import { Transform } from "class-transformer";
 import { ObjectId } from "mongodb";
-import { Entity, ObjectIdColumn, Column, ObjectID } from "typeorm";
+import { Entity, ObjectIdColumn, Column } from "typeorm";
 
 @Entity({ name: "users" })
 export class Users {

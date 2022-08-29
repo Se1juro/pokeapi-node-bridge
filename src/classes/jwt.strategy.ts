@@ -1,6 +1,7 @@
 import { VerifiedCallback, ExtractJwt } from "passport-jwt";
 import { Strategy } from "passport-jwt";
 import { PUBLIC_KEY } from "../constants/auth.constant";
+import { ISession } from "../interfaces/ISession.interface";
 
 export class JwtStrategy extends Strategy {
   constructor() {
@@ -14,7 +15,11 @@ export class JwtStrategy extends Strategy {
     );
   }
 
-  static verify(payload: any, done: VerifiedCallback): void {
+  static verify(payload: ISession, done: VerifiedCallback): void {
+    console.log(
+      "🚀 ~ file: jwt.strategy.ts ~ line 18 ~ JwtStrategy ~ verify ~ payload",
+      payload
+    );
     return done(null, payload);
   }
 }
