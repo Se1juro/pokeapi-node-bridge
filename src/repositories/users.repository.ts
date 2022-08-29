@@ -1,7 +1,15 @@
-import { AppDataSource } from "../configDb";
+import { AppDataSource as dbProduction } from "../configDb.prod";
+import { AppDataSource as dbDevelopment } from "../configDb.dev";
 import { Users } from "../models/users.model";
 
-export const UsersRepository = AppDataSource.getRepository(Users).extend({
+let dataSource = dbDevelopment;
+switch (process.env.NODE_ENV) {
+  case "production":
+    dataSource = dbProduction;
+    break;
+}
+
+export const UsersRepository = dataSource.getRepository(Users).extend({
   async findUsers(page?: number, limit?: number): Promise<Users[]> {
     return await this.find();
   },

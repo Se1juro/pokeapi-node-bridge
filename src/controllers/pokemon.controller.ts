@@ -9,7 +9,7 @@ import { AuthJwtMiddleare } from "../middlewares/auth.middleware";
 import { PokemonService } from "../services/pokemon.service";
 
 @JsonController("/api/pokemon")
-// @UseBefore(AuthJwtMiddleare)
+@UseBefore(AuthJwtMiddleare)
 export class PokemonController {
   constructor(protected readonly pokemonService: PokemonService) {}
 

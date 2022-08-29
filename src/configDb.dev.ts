@@ -10,6 +10,6 @@ export const AppDataSource = new DataSource({
   authSource: "admin",
   synchronize: false,
   logging: true,
-  entities: [resolve("./src/models/*.ts")],
-  migrations: [resolve("./src/models/*.ts")],
+  entities: [resolve("./src/models/**/*.ts")],
+  migrations: [resolve("./src/migrations/*.ts")],
 });
