@@ -13,7 +13,6 @@ class JwtStrategy extends passport_jwt_2.Strategy {
         }, JwtStrategy.verify);
     }
     static verify(payload, done) {
-        console.log("🚀 ~ file: jwt.strategy.ts ~ line 18 ~ JwtStrategy ~ verify ~ payload", payload);
         return done(null, payload);
     }
 }

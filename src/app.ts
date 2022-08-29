@@ -12,8 +12,8 @@ const app = createExpressServer({
   },
   defaultErrorHandler: false,
   classTransformer: true,
-  controllers: [path.join(__dirname + "/controllers/*.ts")],
-  middlewares: [path.join(__dirname + "/middlewares/*.ts")],
+  controllers: [path.join(__dirname + "/controllers/*{.ts,.js}")],
+  middlewares: [path.join(__dirname + "/middlewares/*{.ts,.js}")],
   cors: true,
   currentUserChecker: async (action: Action) => {
     return action.request.user;

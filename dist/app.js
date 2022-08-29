@@ -25,8 +25,8 @@ const app = (0, routing_controllers_1.createExpressServer)({
     },
     defaultErrorHandler: false,
     classTransformer: true,
-    controllers: [path_1.default.join(__dirname + "/controllers/*.ts")],
-    middlewares: [path_1.default.join(__dirname + "/middlewares/*.ts")],
+    controllers: [path_1.default.join(__dirname + "/controllers/*{.ts,.js}")],
+    middlewares: [path_1.default.join(__dirname + "/middlewares/*{.ts,.js}")],
     cors: true,
     currentUserChecker: (action) => __awaiter(void 0, void 0, void 0, function* () {
         return action.request.user;
