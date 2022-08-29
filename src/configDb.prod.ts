@@ -8,5 +8,5 @@ export const AppDataSource = new DataSource({
   authSource: "admin",
   synchronize: false,
   logging: true,
-  entities: [resolve(__dirname, "./models/*.js")],
+  entities: [resolve(__dirname, "./models/*{.ts,.js}")],
 });

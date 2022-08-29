@@ -1,4 +1,6 @@
 import { DataSource } from "typeorm";
+import { resolve } from "path";
+
 export const AppDataSource = new DataSource({
   name: "default",
   type: "mongodb",
@@ -9,6 +11,6 @@ export const AppDataSource = new DataSource({
   authSource: "admin",
   synchronize: false,
   logging: true,
-  entities: ["./src/models/*{.ts,.js}"],
+  entities: [resolve(__dirname, "./models/*{.ts,.js}")],
   migrations: ["./src/migrations/*{.ts,.js}"],
 });

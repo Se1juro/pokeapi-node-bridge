@@ -11,5 +11,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     authSource: "admin",
     synchronize: false,
     logging: true,
-    entities: [(0, path_1.resolve)(__dirname, "./models/*.js")],
+    entities: [(0, path_1.resolve)(__dirname, "./models/*{.ts,.js}")],
 });
